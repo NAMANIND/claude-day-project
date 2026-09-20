@@ -1,0 +1,9 @@
+{"id":1001,"author":"op","text":null,"points":312,"children":[
+{"id":1,"author":"alice","text":"This is great, but <i>why not just use</i> pgbadger? It already does &quot;most&quot; of this.","points":45,"children":[
+  {"id":11,"author":"op","text":"pgbadger is batch-oriented; this streams. Fair point on overlap.","points":30,"children":[
+    {"id":111,"author":"bob","text":"Deep reply that should be skipped at depth 2","points":1,"children":[]}
+  ]}
+]},
+{"id":2,"author":"carol","text":"Installed in 30 seconds, found a missing index in 2 minutes. Nice.","points":22,"children":[]},
+{"id":3,"author":"dave","text":"","points":0,"children":[]}
+]}

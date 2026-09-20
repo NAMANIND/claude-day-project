@@ -1,0 +1,6 @@
+[{"data":{"children":[{"kind":"t3","data":{"id":"abc2"}}]}},
+ {"data":{"children":[
+  {"kind":"t1","data":{"author":"u1","body":"Self-promo but honestly useful. Mods pls don't remove.","score":55,"replies":{"data":{"children":[{"kind":"t1","data":{"author":"u2","body":"Agreed, the demo GIF sold me.","score":12,"replies":""}}]}}}},
+  {"kind":"t1","data":{"author":"u3","body":"[deleted]","score":0,"replies":""}},
+  {"kind":"more","data":{}}
+ ]}}]
