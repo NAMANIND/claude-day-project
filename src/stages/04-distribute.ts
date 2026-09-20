@@ -48,7 +48,7 @@ Instructions:
       schema: DistributionPlan,
       model: ROLE_MODEL.distribute,
       systemPrompt: SYSTEM,
-      maxTurns: 3,
+      maxTurns: 8,
       maxBudgetUsd: ROLE_BUDGET_USD.distribute,
       onEvent: handle.onEvent,
     });

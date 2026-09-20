@@ -101,7 +101,7 @@ export async function runStructured<T>(args: RunArgs<T>): Promise<RunResult<T>> 
       permissionMode: "bypassPermissions",
       allowDangerouslySkipPermissions: true,
       settingSources: [],
-      maxTurns: args.maxTurns ?? 12,
+      maxTurns: args.maxTurns ?? 10,
       maxBudgetUsd: args.maxBudgetUsd,
       outputFormat: { type: "json_schema", schema: toStructuredSchema(args.schema) },
       forwardSubagentText: true,
@@ -118,6 +118,7 @@ export async function runStructured<T>(args: RunArgs<T>): Promise<RunResult<T>> 
     let structured: unknown;
     let resultText = "";
     let subtype = "unknown";
+    try {
     for await (const msg of query({ prompt, options })) {
       for (const ev of toProgress(msg)) args.onEvent?.(ev);
       if (msg.type === "result") {
@@ -131,6 +132,11 @@ export async function runStructured<T>(args: RunArgs<T>): Promise<RunResult<T>> 
           resultText = (msg as { result: string }).result;
         }
       }
+    }
+    } catch (err) {
+      // The SDK throws on some error results (e.g. max turns). Treat as a failed attempt so the retry runs.
+      subtype = `exception: ${err instanceof Error ? err.message : String(err)}`;
+      args.onEvent?.({ kind: "status", text: subtype });
     }
     return { structured, resultText, subtype };
   };

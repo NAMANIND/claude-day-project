@@ -85,7 +85,7 @@ Return a JuryVerdict with persona = "${persona.name}" and one assetScores entry 
     model: ROLE_MODEL.juror,
     systemPrompt: personaSystemPrompt(persona),
     effort: "medium",
-    maxTurns: 3,
+    maxTurns: 8,
     maxBudgetUsd: ROLE_BUDGET_USD.juror,
     onEvent,
   });
@@ -126,7 +126,7 @@ Return RevisedAssets: the complete asset set with the fixes applied, plus a chan
     schema: RevisedAssets,
     model: ROLE_MODEL.revise,
     systemPrompt: "You are a senior launch editor. You apply jury feedback precisely, preserve the author's voice, and never add hype while fixing things.",
-    maxTurns: 3,
+    maxTurns: 8,
     maxBudgetUsd: ROLE_BUDGET_USD.revise,
     onEvent,
   });
@@ -152,18 +152,28 @@ export const juryStage: Stage<JuryResult> = {
       const started = Date.now();
       let roundCost = 0;
       handle.message(`round ${round}: 0/${PERSONAS.length} jurors`);
+      const failed: string[] = [];
       const results = await Promise.all(
         PERSONAS.map((p) =>
           limit(async () => {
-            const r = await judge(p, assets, brief, research, round, () => {});
-            done++;
-            roundCost += r.costUsd;
-            handle.message(`round ${round}: ${done}/${PERSONAS.length} jurors · ${p.emoji} ${p.name} ${r.verdict.overall}/10`);
-            return r;
+            try {
+              const r = await judge(p, assets, brief, research, round, () => {});
+              done++;
+              roundCost += r.costUsd;
+              handle.message(`round ${round}: ${done}/${PERSONAS.length} jurors · ${p.emoji} ${p.name} ${r.verdict.overall}/10`);
+              return r;
+            } catch (err) {
+              done++;
+              failed.push(p.name);
+              handle.message(`round ${round}: ${done}/${PERSONAS.length} jurors · ${p.emoji} ${p.name} failed`);
+              return undefined;
+            }
           }),
         ),
       );
-      const verdicts = results.map((r) => r.verdict);
+      const verdicts = results.filter((r): r is NonNullable<typeof r> => !!r).map((r) => r.verdict);
+      if (failed.length) ctx.ui.warn(`Jurors skipped after errors: ${failed.join(", ")}`);
+      if (!verdicts.length) throw new Error("Every juror failed; check auth/budget and resume with --from jury");
       const agg = aggregate(verdicts);
       const juryRound: JuryRound = { round, assetsVersion: assets.version, verdicts, aggregate: agg, costUsd: roundCost };
       ctx.addCost("jury", roundCost, Date.now() - started, ROLE_MODEL.juror);

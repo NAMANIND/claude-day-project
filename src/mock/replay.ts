@@ -22,12 +22,13 @@ export async function replayMock(flags: Flags, ui: Ui) {
   }
   const brief = readArtifact(FIXTURE_DIR, "01-brief", ProductBrief);
   const jury = readArtifact(FIXTURE_DIR, "06-jury", JuryResult);
-  const meta = fs.existsSync(path.join(FIXTURE_DIR, "meta.json")) ? RunMeta.parse(JSON.parse(fs.readFileSync(path.join(FIXTURE_DIR, "meta.json"), "utf8"))) : undefined;
+  const bundleFile = path.join(FIXTURE_DIR, "bundle.json");
+  const meta = fs.existsSync(bundleFile) ? RunMeta.parse(JSON.parse(fs.readFileSync(bundleFile, "utf8")).meta) : undefined;
 
   const ctx = new RunContext(meta?.source ?? brief.repoUrl ?? brief.slug, { ...flags, from: "report", mock: true }, ui, brief.slug);
   fs.mkdirSync(ctx.outDir, { recursive: true });
   for (const f of fs.readdirSync(FIXTURE_DIR)) {
-    if (f.endsWith(".json")) fs.copyFileSync(path.join(FIXTURE_DIR, f), path.join(ctx.outDir, f));
+    if (f.endsWith(".json") && f !== "bundle.json") fs.copyFileSync(path.join(FIXTURE_DIR, f), path.join(ctx.outDir, f));
   }
   if (meta) Object.assign(ctx.meta, { ...meta, mock: true, slug: brief.slug });
 

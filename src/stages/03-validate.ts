@@ -83,7 +83,7 @@ Instructions:
       schema: ValidationReport,
       model: ROLE_MODEL.validate,
       systemPrompt: SYSTEM,
-      maxTurns: 3,
+      maxTurns: 8,
       maxBudgetUsd: ROLE_BUDGET_USD.validate,
       onEvent: handle.onEvent,
     });
