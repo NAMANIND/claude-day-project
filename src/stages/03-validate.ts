@@ -75,7 +75,8 @@ Instructions:
 - fix: the single most valuable concrete change for that principle (rewrite a sentence, add a benchmark, name a competitor, etc.).
 - recommendedPositioning: the one-liner we should actually launch with. Noun + verb + for whom. No adjectives.
 - predictedReaction: two or three sentences on how ${brief.targetAudience} will react on launch day, given the objections in the research.
-- overall and verdict will be recomputed from weights; still fill them in.`;
+- overall and verdict will be recomputed from weights; still fill them in.
+- Use only facts and numbers that appear in the product or research sections above. If you want to suggest a "why now" or a proof point, phrase it as something to verify or build, never as an established fact.`;
 
     const res = await runStructured({
       label: "validate",

@@ -118,6 +118,8 @@ ${round.verdicts.map((v) => `- ${v.persona}: "${v.predictedTopComment}"`).join("
 # Current assets (all of them; return ALL assets, changed or not)
 ${assetsPacket(assets, Object.keys(ASSET_LABELS) as AssetKey[])}
 
+Hard rule: do not introduce facts, numbers, or claims of completed work that are not in the current assets or the jury feedback. If a juror asked for proof you do not have, remove the claim rather than inventing support.
+
 Return RevisedAssets: the complete asset set with the fixes applied, plus a changelog with one line per change naming the asset and the juror concern it addresses. Keep everything that was not criticized. Keep the same structure (same number of reddit posts, tweets under 280 chars, Show HN title under 80 chars).`;
 
   const res = await runStructured({

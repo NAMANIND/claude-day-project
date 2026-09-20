@@ -22,7 +22,12 @@ ${validation.recommendedPositioning}
 ${validation.scores.filter((s) => s.score < 8).map((s) => `- ${s.principleId} (${s.score}/10): ${s.fix}`).join("\n")}
 
 # What the market says
-${researchDigest(research, 9_000)}`;
+${researchDigest(research, 9_000)}
+
+# Hard rules
+- Use only facts, numbers, and quotes that appear in the product brief or the research above. Do not invent statistics, user counts, benchmarks, or dates.
+- Do not claim work that has not been done (backtests, case studies, customers, integrations). If proof is missing, say what you plan to do or ask for it instead.
+- Copy a number only if you can point to the line above it came from.`;
 }
 
 export const draftStage: Stage<Assets> = {
