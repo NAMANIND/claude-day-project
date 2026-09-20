@@ -1,0 +1,67 @@
+{
+  "name": "LaunchJury",
+  "slug": "claude-day-project",
+  "repoUrl": "",
+  "oneLiner": "Generates and scores launch assets for indie developers releasing a side project.",
+  "whatItDoes": "LaunchJury takes a repo (local path or GitHub URL), reads its README/manifests/source, researches how comparable products landed on Hacker News, Reddit, Product Hunt and Indie Hackers, validates the positioning against eight launch principles, and drafts a full set of launch assets: a Show HN title/post/first comment, a Product Hunt tagline/description/maker comment, an X thread, a LinkedIn post, per-subreddit Reddit posts, and demo/launch video scripts. Seven weighted AI juror personas (HN veteran, PH coach, Reddit mod, X growth marketer, dev-tools copywriter, demo director, skeptical target user) score every asset, predict the top comment it would get, and list must-fix edits; a deterministic foreman aggregates scores and a reviser rewrites drafts until they pass (weighted average ≥7.5, no asset below 6) or the round limit (default 2) is hit. Output is a single self-contained report.html plus markdown assets and JSON artifacts per stage in out/<project>/.",
+  "howItWorks": "A CLI (npx tsx src/cli.ts <repo>) runs an 8-stage pipeline built on the Claude Agent SDK: resolve → ingest (reads code, asks audience/goal/tone) → research (deterministic HN Algolia + Reddit prefetch, then a Sonnet agent with web-search/MCP tools extracts quotes/objections/competitors) → validate (Opus scores 8 weighted positioning principles) → distribute (Sonnet ranks channels/timing/sequence) → draft (Opus writes all assets in parallel) → jury (7 parallel Sonnet/Opus personas score + a pure-TypeScript foreman aggregates + reviser loop, up to N rounds) → report (renders static HTML/markdown, no external requests). Each LLM stage is a single query() call with a zod-validated JSON-schema output, and every stage's artifact is written to disk so runs can be resumed with --from <stage>. Supports --mock/--mock-research for offline demo, --budget to cap spend (real runs cost ~$2-4).",
+  "category": "CLI dev tool",
+  "language": "TypeScript",
+  "license": "MIT",
+  "keyFeatures": [
+    "Reads a repo's code/README to understand the actual product before drafting anything",
+    "Deterministic prefetch of real Hacker News and Reddit data plus an AI research analyst that cites quotes and URLs",
+    "Eight-principle validation scorecard (clarity, audience, differentiation, why-now, proof, objections, credibility, ask/friction)",
+    "Seven weighted AI juror personas that score drafts, predict the audience's top comment, and demand must-fix edits",
+    "Deterministic, unit-tested foreman that aggregates jury scores and gates pass/fail reproducibly",
+    "Automatic revision loop (reviser + re-jury) until assets pass or rounds run out",
+    "Full asset set: Show HN, Product Hunt, X thread, LinkedIn, per-subreddit Reddit posts, demo video script, launch video script",
+    "Ranked distribution plan with best channels, timing, tags, and a day-by-day launch sequence",
+    "Single self-contained report.html with copy buttons, plus per-stage JSON artifacts for resumable runs",
+    "Mock/offline replay mode and a configurable spend budget"
+  ],
+  "installCommand": "npx tsx src/cli.ts ./my-project",
+  "differentiatorsClaimed": [
+    "Grounds every draft and score in real research (actual HN/Reddit quotes with URLs) rather than generic marketing advice",
+    "Scores drafts against a reproducible, weighted, multi-persona jury instead of a single generic AI review",
+    "Deterministic foreman with unit tests makes pass/fail scoring reproducible, not just an LLM vibe check",
+    "Produces the full launch kit (posts + video scripts + distribution plan) in one run rather than just a tagline generator",
+    "Read-only, sandboxed agents that never see the user's CLAUDE.md; single self-contained HTML report with no external requests"
+  ],
+  "targetAudience": "A solo indie hacker or side-project developer who just finished building something and has never written a Show HN post or Product Hunt launch",
+  "launchGoal": "stars",
+  "tone": "technical-plain",
+  "searchQueries": [
+    "show hn post generator",
+    "product hunt launch copywriting tool",
+    "AI launch asset generator for indie hackers",
+    "how to write a Show HN post that works",
+    "launch checklist for side projects",
+    "AI feedback on marketing copy before posting"
+  ],
+  "candidateSubreddits": [
+    "SideProject",
+    "IndieHackers",
+    "startups",
+    "programming",
+    "webdev",
+    "SaaS"
+  ],
+  "competitorsGuessed": [
+    "Product Hunt tagline/description generators (various GPT wrapper tools)",
+    "Copy.ai / Jasper generic marketing copy generators",
+    "Show HN title generators / HN launch guides",
+    "Manual launch checklist templates (Indie Hackers, Trends.vc launch guides)"
+  ],
+  "openQuestions": [
+    "Is this meant to become a hosted/SaaS product or stay a local CLI/OSS tool for Claude Day specifically?",
+    "Does research quality depend heavily on Reddit/HN API rate limits or keys not shown in the reviewed files?",
+    "How is the GitHub-URL ingestion path (vs local path) implemented — does it clone or use API access?",
+    "What happens to cost/quality if a user lacks a Claude subscription and relies solely on ANTHROPIC_API_KEY spend?"
+  ],
+  "suggestedAnswers": {
+    "targetAudience": "A solo indie hacker or side-project developer who just finished building something and has never written a Show HN post or Product Hunt launch",
+    "launchGoal": "stars",
+    "tone": "technical-plain"
+  }
+}

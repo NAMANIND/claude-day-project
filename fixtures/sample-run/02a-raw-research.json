@@ -1,0 +1,532 @@
+{
+  "queries": [
+    "show hn post generator",
+    "product hunt launch copywriting tool",
+    "AI launch asset generator for indie hackers",
+    "how to write a Show HN post that works",
+    "launch checklist for side projects"
+  ],
+  "hn": [
+    {
+      "objectID": "43729683",
+      "title": "Show HN: I made a Doom-like game fit inside a QR code",
+      "url": "https://github.com/Kuberwastaken/backdooms",
+      "hnUrl": "https://news.ycombinator.com/item?id=43729683",
+      "points": 531,
+      "numComments": 136,
+      "createdAt": "2025-04-18T16:40:25Z",
+      "comments": [
+        {
+          "author": "x3n0ph3n3",
+          "text": "I think your trailer video link is bad."
+        },
+        {
+          "author": "croisillon",
+          "text": "correct link: https://www.youtube.com/shorts/QWPr10cAuGc"
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "Fixed it! My bad haha"
+        },
+        {
+          "author": "r1chardnl",
+          "text": "Your game trailer links to a short called \"Fly me to the moon - 19 September 2024\". I think this is a mistake?"
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "Should be fixed, sorry haha"
+        },
+        {
+          "author": "jasonjmcghee",
+          "text": "You should update the css for the canvas to be `image-rendering: pixelated` so things look crisp rather than blurry!"
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "I tried that but this just looks more fun and retro haha"
+        },
+        {
+          "author": "the_arun",
+          "text": "My iPhone camera says - \"No Usable Data found\" when I scan the QR code. On a different context, loading a game in QR code also made me to think, can anyone inject a malware script using QR codes?"
+        },
+        {
+          "author": "KeplerBoy",
+          "text": "Sure if the parser is broken anything might happen. Historically there have been exploits for Sony's PSP using modified .tiff images or an exploit for the Nintendo 3DS where a modified .m4a file could be used."
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "You'd need something like https://qrscanner.org/ because most phones suck at scanning larger QR codes. Also, it won't work on your phone, can't put in that compatibility with size restraints, sadly"
+        },
+        {
+          "author": "conradev",
+          "text": "I got it to work with a shortcut: https://www.icloud.com/shortcuts/d4793e08d64d4ff1b7ea725b944..."
+        },
+        {
+          "author": "giarc",
+          "text": "I scanned on an iPhone using native QR code scanner and it says \"no usable data found\"."
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "Hey thanks for checking it out! You'd need something like https://qrscanner.org/ because most phones suck at scanning larger QR codes. Also, it won't work on your phone, can't put in that compatibility with size restraints, sadly."
+        },
+        {
+          "author": "pudquick",
+          "text": "data: URI URLs aren't supported in it, it has nothing to do with the size / length of the QR code For example, this self-contained webpage: <html><body>Hi!</body></html> encoded is: data:text/html;base64,PGh0bWw+PGJvZHk+SGkhPC9ib2R5PjwvaHRtbD4= If you paste that into a browser, it will render \"Hi!\". Very short and easy. But if you encode is as a QR code, it won't work in this situation."
+        },
+        {
+          "author": "Jerry2",
+          "text": "I'm kinda relieved that it doesn't work on an iPhone. I often scan codes posted around to save the time typing URLs and running arbitrary code by just scanning a QR code freaks me out."
+        },
+        {
+          "author": "deadbabe",
+          "text": "How can there not be even one screenshot of the game in the readme?"
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "Because it kept evolving and it was more related to the development than the game itself. But if you want to skip the friction of scanning the QR code, you can directly play a hosted version at: https://kuberwastaken.github.io/backdooms/"
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "Heyo, update: I added a GIF to the repo, hope it's better :)"
+        },
+        {
+          "author": "jerjerjer",
+          "text": "Year 3567: automatic interstellar probe finds remnants a technical alien civilization. Year 3678, Show HN: I compiled DOOM for an alien CPU architecture. Vernor Vinge kind of touches this topic a bit in his Zones of Thought series."
+        },
+        {
+          "author": "kuberwastaken",
+          "text": "Haha I solemnly promise that I'll compile DOOM for an alien CPU architecture if we ever get access to one!"
+        }
+      ]
+    },
+    {
+      "objectID": "27435377",
+      "title": "Launch HN: Runway (YC W21) – Easier iOS and Android app releases for teams",
+      "hnUrl": "https://news.ycombinator.com/item?id=27435377",
+      "points": 93,
+      "numComments": 30,
+      "createdAt": "2021-06-08T14:06:47Z",
+      "comments": [
+        {
+          "author": "sanjayio",
+          "text": "We’ve been using Runway at ClassPass for the last several months. The engineers love it, we can create a release in one click, not to mention improved coordination. The possibility of having an automated RC cut is exciting. How’d the team land on savings of $50k/year?"
+        },
+        {
+          "author": "gsavit",
+          "text": "We started with some napkin math, graduated to a complicated spreadsheet, and then tried to distill that into this rough calculator: https://runway.team/release-cost-calculator . General idea was to capture the cost of wasted time spent coordinating and herding cats instead of doing real work! We think there are even more hidden costs not captured here though - e.g. upkeep for in-house tooling or…"
+        },
+        {
+          "author": "danpalmer",
+          "text": "This looks great for medium-large size teams, but I've often found these sorts of tools to not have the same impact in smaller teams where communication and processes are a bit leaner and requirements simpler. Is this a market you're aiming for, and how do you think Runway suits small teams? Related, I often find pricing doesn't scale down well for smaller teams (for understandable reasons!). Wha…"
+        },
+        {
+          "author": "gsavit",
+          "text": "You're definitely right, in its current form Runway is aimed most squarely at mid to large sized teams. But, we do think there's still value for smaller teams - and in fact, a couple of our early customers are on the smaller side. Although some of the coordination and process overhead isn't there, there's still value in creating a source of truth and reducing context-switching between tools durin…"
+        },
+        {
+          "author": "trekirkman",
+          "text": "Fwiw we're on the smaller side (~17 people, 3 mobile eng) and have been loving Runway for months. I definitely expect the impact will scale with our team size, but it's already been a no-brainer win for us. When we started, we had a 100% founder-led development/releases process, and the Runway team was pretty hands on in helping us level up. Spending less founder time/thought on releases has been…"
+        },
+        {
+          "author": "bredren",
+          "text": "Any thoughts on the Xcode cloud service described in the WWDC keynote yesterday? Curious how this can be folded into your business."
+        },
+        {
+          "author": "gsavit",
+          "text": "We were super excited by the Xcode Cloud announcement! It’s a neat evolution of the Apple dev ecosystem and could be especially helpful for smaller teams wanting to more easily and quickly level-up their Apple DevOps. We more or less see it as a substitute for any of the other cloud CI/CD providers teams are already using and integrating with Runway - on the Apple side only, of course. So, a comp…"
+        },
+        {
+          "author": "an_opabinia",
+          "text": "Let's say I have an iOS app. Not a single thing changes in my repo. I would like to build and submit to the App Store every day. On how many days out of 100 does Runway successfully result in an app submission status of \"Under review by Apple\" or whatever, without any input from me?"
+        },
+        {
+          "author": "gsavit",
+          "text": "Interesting question :) Our \"full autopilot\" mode isn't yet launched but once it is, if you have a recurring cadence set up with scheduled kickoff and submit days, and if each release's interim steps/gates are green, you'd theoretically be able to submit 100 out of 100 with no manual intervention. The real-world limiting factor is that in App Store Connect only one submission can be in flight at …"
+        },
+        {
+          "author": "gregdoesit",
+          "text": "This is a really cool project. When I worked at Uber, the team built a custom release train called Metro, automating as much as possible, integrating with various internal tools and touchpoints. It worked really well: except if you want this, you need to build it yourself. When I researched my book Building Mobile Apps at Scale [1], the best advice I could give for large teams and release trains …"
+        },
+        {
+          "author": "gsavit",
+          "text": "It's definitely a problem area that's currently tricky to tackle properly for all but the largest of teams/orgs. Building in-house is often a luxury, and one which requires a big investment not just up front but into the future with upkeep and support. Of course it's nice to have a custom solution, but we've been working hard to make Runway flexible and able to adapt to every team's specific work…"
+        },
+        {
+          "author": "goodcjw2",
+          "text": "Neat! Looks like a great release tool. I'm wondering whether there is a specific reason to mobile apps? Would be nice if all releases (web, mobile, etc) can be going through the same pipeline. After all, those \"people-centric\" tasks are generally applicable to other projects as well."
+        },
+        {
+          "author": "gsavit",
+          "text": "Some aspects of mobile (e.g. deploying binary, dealing with app stores) make it a more gated and complicated process. That, coupled with our team's domain experience in mobile, led us to focus there to start with. But you're totally right - there's a lot of overlap with any kind of deployment and we have an eye towards a future where Runway is the single place where teams ship everything they nee…"
+        },
+        {
+          "author": "gregdoesit",
+          "text": "In my experience, mobile is a completely different beast compared to web thanks to things like: - You ship a binary that you cannot revert. Mistakes are very expensive: which is not the case for web. - The App Store review process. - Localization often being shipped with the binary (and you can’t fix it once shipped) - The business impact for mobile apps can be large: your highest value customers…"
+        },
+        {
+          "author": "vosper",
+          "text": "> We built Runway to connect all those dots. It pulls in all Jira tickets and code relevant to the release, side-by-side, to surface and resolve any out-of-sync tickets or code. You can set up custom, interactive checklists with item-specific owners to replace the monster Google spreadsheet, and our Slack integration will ping the appropriate people or notify everyone when important milestones ha…"
+        },
+        {
+          "author": "gsavit",
+          "text": "We're happy to hear this sounds appealing even in a non-mobile context! While some of the friction and pain points that Runway aims to solve are especially acute for mobile, it's true that releases are often a problem area for web as well, especially in team settings. We definitely have the idea of applying Runway beyond mobile in the back of our mind!"
+        },
+        {
+          "author": "ditn",
+          "text": "This is very very cool and I'm excited to eventually get access to it. I'd love to see a Crashlytics integration so that we can also use Runway to monitor post-release health in one place - looks like maybe you thought about this as I can see Firebase support is coming. Anyway good luck with this and I look forward to giving it a spin."
+        },
+        {
+          "author": "gsavit",
+          "text": "Post-release monitoring and metrics is definitely an area of big interest for us as well! We’re excited to flesh out that part of the platform. Also the idea of release-to-release intelligence, so your team can see how things track over time and make sure your release practice and performance trend in a good direction. Do reach out so we can get you set up with access :)"
+        }
+      ]
+    },
+    {
+      "objectID": "35816457",
+      "title": "Show HN: Hypertune – Visual, functional, statically-typed configuration language",
+      "url": "https://www.hypertune.com/",
+      "hnUrl": "https://news.ycombinator.com/item?id=35816457",
+      "points": 49,
+      "numComments": 9,
+      "createdAt": "2023-05-04T15:01:47Z",
+      "comments": [
+        {
+          "author": "refrigerator",
+          "text": "Congrats on the launch! We've been using Hypertune at Causal ( https://causal.app ) for the last few months and it's saved tonnes of engineering cycles letting me and our PM iterate directly on custom onboarding copy for different Causal templates, alongside more typical feature flag use-cases :)"
+        },
+        {
+          "author": "moondev",
+          "text": "Would love to see something like this for Kubernetes CRDs, but leveraging the existing openAPI schema to expose in a nice UI for CRUD"
+        },
+        {
+          "author": "miraantabrez",
+          "text": "Sounds like a good use case! If you use the OpenAPI schema in your Hypertune project schema, this should just work. You'll get the nice CRUD UI for the CRDs, then you can use the GraphQL API to query them."
+        },
+        {
+          "author": "ewuhic",
+          "text": "Hi, and thank you for the product. I took just a short look at it, and sorry, if it's already answered there, my question - how easy would it be to 1) embed this into some self-service pipeline for third-party stakeholders to modify established fronted items (say, newsletter layout); 2) lock this one behind authorisation levels; 3) expose configuration options as some API?"
+        },
+        {
+          "author": "miraantabrez",
+          "text": "Hi, thanks for taking a look! 1) Quite easy - once you define your schema, you can share projects with any stakeholder (internal or external) to update the configuration logic from the UI themselves. 2) Granular permissions are built into the logic tree UI so you can control who has access to which subtrees. E.g. you could say you and your developers have access to the root. But a specific stakeh…"
+        }
+      ]
+    },
+    {
+      "objectID": "48359478",
+      "title": "Show HN: DepsGuard – One command to harden NPM/pnpm/yarn/bun/uv configs",
+      "url": "https://github.com/arnica/depsguard",
+      "hnUrl": "https://news.ycombinator.com/item?id=48359478",
+      "points": 40,
+      "numComments": 7,
+      "createdAt": "2026-06-01T16:58:52Z",
+      "comments": [
+        {
+          "author": "drcongo",
+          "text": "I tried this out after finding it on one of your comments yesterday, the good: it set some values in global config files for me which was handy, the not so good: I still haven't managed to make it find any project-level configs. Either way, it's a nice little tool, thanks."
+        },
+        {
+          "author": "eranation",
+          "text": "Thanks for using it and thanks for the feedback! Would you mind opening an issue here with the steps you did (including OS / method of installing) I’ll do my best to fix it. https://github.com/arnica/depsguard/issues/new Note that the search is done from the location you run it. That was a change I made that now I think might have been incorrect. Eg if you run it from the downloads folder it will…"
+        },
+        {
+          "author": "eranation",
+          "text": "Should be fixed now, thanks again!"
+        },
+        {
+          "author": "craftedcode",
+          "text": "The \"did it save someone from a supply chain attack? Also probably yes\" line is great. The problem with security tooling is exactly this — you never see the attack you prevented."
+        },
+        {
+          "author": "eranation",
+          "text": "<3"
+        },
+        {
+          "author": "jcjmcclean",
+          "text": "I love this! Although I've already gone through and made manual updates, I'll still give this a try. It's worth it even just to verify that I haven't missed anything. Thanks for sharing."
+        },
+        {
+          "author": "eranation",
+          "text": "Thank you so much for writing this!"
+        }
+      ]
+    },
+    {
+      "objectID": "46242071",
+      "title": "Show HN: Jottings; Anti-social microblog for your thoughts",
+      "url": "https://jottings.me/",
+      "hnUrl": "https://news.ycombinator.com/item?id=46242071",
+      "points": 28,
+      "numComments": 16,
+      "createdAt": "2025-12-12T08:32:13Z",
+      "comments": [
+        {
+          "author": "uniqueuid",
+          "text": "It's always nice to see products that cater to the best users can be instead of the worst. Personally, AI for writing is in the same corner as the other pathologies you've listed (popularity counts etc), so it's not for me. But some folks will see that differently."
+        },
+        {
+          "author": "vishalvshekkar",
+          "text": "Thank you! I hear you, and I share a big part of that opinion on AI writing. From the feedback I got from some folks before, it seemed to be something many were interested in, which is why I designed it to be very aid-like, and less to generate content fully from scratch and post automatically: essentially spamming. I am not very sold on the AI tool and am very open to removing it with more such …"
+        },
+        {
+          "author": "bastulos",
+          "text": "Given you are already offering the product for free it would be cool to have a self hosted option. Typically I'm not the one to suggest this on hobby projects being made into a product bc you gotta make money somehow to support this and I respect that to some appreciable degree."
+        },
+        {
+          "author": "jimmydoe",
+          "text": "If I were to self host, a Mastodon/Pleroma/Misskey with federation turned off seems better choice?"
+        },
+        {
+          "author": "vishalvshekkar",
+          "text": "I hear you. I actually am quite open to making Jottings self-host-able. I might want to slice the multi-tenant layer out before I do that, only because that is complicated and not needed for someone to host and manage multiple sites, and is the part that primarily makes this a product. I'll give it a think. I also hear you about the making money part, and I largely agree."
+        },
+        {
+          "author": "blargwill",
+          "text": "Feels very similar to Digital Gardens - something I've been doing to hit all the same points! (Shameless plug to mine as an example https://launchbowl.com ) This product does provide a bit more of a structured approach without any of the self-hosting/coding difficulty which I think would have a wider market appeal."
+        },
+        {
+          "author": "vishalvshekkar",
+          "text": "Ha! Very cool! I did not know about the community/idea of Digital Gardens! From my quick glance, it seems close to a lot of my thoughts. I like what you have done with Launchbowl! The part about linking multiple posts together is something I swear by for personal writing & note-taking on Anytype. Graph is a very efficient way to process a lot of connected information! Thank you! Yes, Jottings was…"
+        },
+        {
+          "author": "pentaphobe",
+          "text": "Big fan of this trend, well done! Personally this kind of thing is just always gonna be self hosted or local only, but I see the appeal for folks who don't have that option Brief off-topic greybeard cloud yell: I hate that we've all adopted the colloquial use of \"algorithm\". Although it's interesting to imagine whether software is even possible with \"no algorithm\" :)"
+        },
+        {
+          "author": "vishalvshekkar",
+          "text": "Thank you very much! Yeah, I agree. In fact, even Jottings started as something I built for my own use as a stand-alone site that I used to host. Made it into a production for others to use only after someone of my friends asked me for a similar site. I used to feed my post (or Jots) data to my build system through a json file that I updated to add new jots. I hope that the appeal is real for a g…"
+        },
+        {
+          "author": "linhns",
+          "text": "Not sure if you accounted for tablets but it just looks far too packed. Concept is great though."
+        },
+        {
+          "author": "vishalvshekkar",
+          "text": "Oh, is it? I did brief tests on my iPad and didn't find any glaring issues. Could you help me with what device and screen size you find it cluttered? Which of these do you find cluttered on your tablet? - Landing page: https://jottings.me - Dashboard: https://dashboard.jottings.me - A Jottings Site: Example: https://jottingsjottings.me"
+        },
+        {
+          "author": "gradientsrneat",
+          "text": "Is there a way to permalink to a specific microblog post?"
+        },
+        {
+          "author": "vishalvshekkar",
+          "text": "Currently, only the perma-part of permalink is possible per post (or jot). Something like this: https://jottings.vishalvshekkar.com/jots/19620509 always links to that specific jot. Where `19620509` is the permanently assigned ID to that specific jot. It is not human-readable and not extracted from the post (jot) itself because the post may be edited and over time, may go out of sync. But, I am op…"
+        },
+        {
+          "author": "nwhnwh",
+          "text": "Don't make links color the same on dark mode. Other than that, I really like it. I hope this becomes a trend, and stays this way."
+        },
+        {
+          "author": "bhu1st",
+          "text": "I bought jotnus.com for similar idea but it never saw a light of the day."
+        }
+      ]
+    },
+    {
+      "objectID": "23968399",
+      "title": "Show HN: Acquisition Blog Post Generator",
+      "url": "https://thisstartupacquisitionannouncementdoesnotexist.ajnisbet.com/",
+      "hnUrl": "https://news.ycombinator.com/item?id=23968399",
+      "points": 24,
+      "numComments": 3,
+      "createdAt": "2020-07-27T19:16:26Z",
+      "comments": []
+    },
+    {
+      "objectID": "49274160",
+      "title": "Show HN: Seisin – a desktop app that turns your job search into analytics",
+      "url": "https://getseisin.com",
+      "hnUrl": "https://news.ycombinator.com/item?id=49274160",
+      "points": 6,
+      "numComments": 1,
+      "createdAt": "2026-08-12T15:39:00Z",
+      "comments": []
+    },
+    {
+      "objectID": "41359100",
+      "title": "Show HN: Coffee Beans Tracker with OCR Inventory Management on GPT",
+      "hnUrl": "https://news.ycombinator.com/item?id=41359100",
+      "points": 6,
+      "numComments": 3,
+      "createdAt": "2024-08-26T16:52:12Z",
+      "comments": []
+    },
+    {
+      "objectID": "41577232",
+      "title": "Show HN: Product Hunt Launch Copywriting Generator",
+      "url": "https://mindpal.space/marketplace/producthunt-launch-copywriting-generator",
+      "hnUrl": "https://news.ycombinator.com/item?id=41577232",
+      "points": 4,
+      "numComments": 1,
+      "createdAt": "2024-09-18T08:26:40Z",
+      "comments": []
+    },
+    {
+      "objectID": "34957510",
+      "title": "Show HN: LinkedIn Post Generator",
+      "url": "https://techjobslondon.co.uk/linkedin-post-generator",
+      "hnUrl": "https://news.ycombinator.com/item?id=34957510",
+      "points": 4,
+      "numComments": 2,
+      "createdAt": "2023-02-27T15:29:36Z",
+      "comments": []
+    },
+    {
+      "objectID": "47752728",
+      "title": "Show HN: Crafto – AI carousel post generator for LinkedIn and Instagram",
+      "url": "https://crafto.ai",
+      "hnUrl": "https://news.ycombinator.com/item?id=47752728",
+      "points": 4,
+      "numComments": 2,
+      "createdAt": "2026-04-13T14:43:01Z",
+      "comments": []
+    },
+    {
+      "objectID": "46232102",
+      "title": "Show HN: A Windows post-install generator",
+      "url": "https://kaic.me/win-post-install/",
+      "hnUrl": "https://news.ycombinator.com/item?id=46232102",
+      "points": 3,
+      "numComments": 0,
+      "createdAt": "2025-12-11T14:54:26Z",
+      "comments": []
+    },
+    {
+      "objectID": "45260322",
+      "title": "Show HN: I used n-grams to see which LLM writes most like a human",
+      "url": "https://kite-mu.vercel.app",
+      "hnUrl": "https://news.ycombinator.com/item?id=45260322",
+      "points": 3,
+      "numComments": 0,
+      "createdAt": "2025-09-16T10:16:54Z",
+      "comments": []
+    },
+    {
+      "objectID": "41053085",
+      "title": "Show HN: TikTok Post Generator – EasyComment",
+      "url": "https://easycomment.ai/en/tiktok-post-generator",
+      "hnUrl": "https://news.ycombinator.com/item?id=41053085",
+      "points": 2,
+      "numComments": 1,
+      "createdAt": "2024-07-24T02:24:17Z",
+      "comments": []
+    },
+    {
+      "objectID": "41043573",
+      "title": "Show HN: Instagram Post Generator – EasyComment",
+      "url": "https://easycomment.ai/en/instagram-post-generator",
+      "hnUrl": "https://news.ycombinator.com/item?id=41043573",
+      "points": 2,
+      "numComments": 1,
+      "createdAt": "2024-07-23T07:34:57Z",
+      "comments": []
+    },
+    {
+      "objectID": "23347406",
+      "title": "Show HN: Social Post Generator – Dozen of posts from your links",
+      "url": "https://ghostwriter.ai/free-social-post-generator/",
+      "hnUrl": "https://news.ycombinator.com/item?id=23347406",
+      "points": 2,
+      "numComments": 0,
+      "createdAt": "2020-05-29T07:55:32Z",
+      "comments": []
+    },
+    {
+      "objectID": "46345874",
+      "title": "Show HN: AI LinkedIn Post Generator – Gemini-powered with 5 tone options",
+      "url": "https://primedirectiveshop.danprice.ai/",
+      "hnUrl": "https://news.ycombinator.com/item?id=46345874",
+      "points": 2,
+      "numComments": 12,
+      "createdAt": "2025-12-21T16:18:49Z",
+      "comments": []
+    },
+    {
+      "objectID": "42356683",
+      "title": "Show HN: Free Blog Post Idea Generator for Your Startup",
+      "url": "https://seoblogbot.com/",
+      "hnUrl": "https://news.ycombinator.com/item?id=42356683",
+      "points": 2,
+      "numComments": 0,
+      "createdAt": "2024-12-08T12:11:27Z",
+      "comments": []
+    },
+    {
+      "objectID": "20087341",
+      "title": "Ask HN: Checklist for Sideprojects development & launch?",
+      "hnUrl": "https://news.ycombinator.com/item?id=20087341",
+      "points": 2,
+      "numComments": 0,
+      "createdAt": "2019-06-03T19:30:57Z",
+      "comments": []
+    },
+    {
+      "objectID": "46058597",
+      "title": "Show HN: Awesome Directories – Open-source launch directory aggregator",
+      "url": "https://awesome-directories.com/",
+      "hnUrl": "https://news.ycombinator.com/item?id=46058597",
+      "points": 2,
+      "numComments": 0,
+      "createdAt": "2025-11-26T15:49:01Z",
+      "comments": []
+    },
+    {
+      "objectID": "47061947",
+      "title": "What determines whether a post gets visibility on Hacker News",
+      "hnUrl": "https://news.ycombinator.com/item?id=47061947",
+      "points": 2,
+      "numComments": 6,
+      "createdAt": "2026-02-18T15:20:20Z",
+      "comments": []
+    },
+    {
+      "objectID": "35314018",
+      "title": "Show HN: Viral Post Generator for LinkedIn",
+      "url": "https://techjobslondon.co.uk/linkedin-post-generator",
+      "hnUrl": "https://news.ycombinator.com/item?id=35314018",
+      "points": 1,
+      "numComments": 0,
+      "createdAt": "2023-03-26T13:06:12Z",
+      "comments": []
+    },
+    {
+      "objectID": "43544891",
+      "title": "Show HN: CoLaunchly – A marketing co-pilot for devs who hate marketing",
+      "url": "https://www.colaunchly.io/",
+      "hnUrl": "https://news.ycombinator.com/item?id=43544891",
+      "points": 1,
+      "numComments": 0,
+      "createdAt": "2025-04-01T09:59:22Z",
+      "comments": []
+    },
+    {
+      "objectID": "35439433",
+      "title": "Show HN: IKiBlast – Aggregating the latest AI tech on a user-friendly platform",
+      "url": "https://www.ikiblast.com/",
+      "hnUrl": "https://news.ycombinator.com/item?id=35439433",
+      "points": 1,
+      "numComments": 0,
+      "createdAt": "2023-04-04T13:41:33Z",
+      "comments": []
+    },
+    {
+      "objectID": "47296680",
+      "title": "Show HN: Lesso – a place for writers to build courses",
+      "url": "https://www.lesso.app",
+      "hnUrl": "https://news.ycombinator.com/item?id=47296680",
+      "points": 1,
+      "numComments": 3,
+      "createdAt": "2026-03-08T12:07:33Z",
+      "comments": []
+    }
+  ],
+  "reddit": [],
+  "warnings": [
+    "Reddit search failed for \"show hn post generator\": HTTP 403 for https://api.reddit.com/search.json?q=show%20hn%20post%20generator&sort=relevance&t=all&limit=8",
+    "Reddit search failed for \"product hunt launch copywriting tool\": HTTP 403 for https://api.reddit.com/search.json?q=product%20hunt%20launch%20copywriting%20tool&sort=relevance&t=all&limit=8",
+    "Reddit search failed for \"AI launch asset generator for indie hackers\": HTTP 403 for https://api.reddit.com/search.json?q=AI%20launch%20asset%20generator%20for%20indie%20hackers&sort=relevance&t=all&limit=8",
+    "Reddit search failed for \"show hn post generator\" in r/SideProject: HTTP 403 for https://api.reddit.com/r/SideProject/search.json?q=show%20hn%20post%20generator&restrict_sr=1&sort=relevance&t=all&limit=5",
+    "Reddit search failed for \"show hn post generator\" in r/IndieHackers: HTTP 403 for https://api.reddit.com/r/IndieHackers/search.json?q=show%20hn%20post%20generator&restrict_sr=1&sort=relevance&t=all&limit=5",
+    "Reddit search failed for \"show hn post generator\" in r/startups: HTTP 403 for https://api.reddit.com/r/startups/search.json?q=show%20hn%20post%20generator&restrict_sr=1&sort=relevance&t=all&limit=5",
+    "Reddit returned nothing (likely blocked). Analyst should use WebSearch with site:reddit.com."
+  ]
+}

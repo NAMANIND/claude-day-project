@@ -1,0 +1,334 @@
+{
+  "queriesUsed": [
+    "show hn post generator (prefetched)",
+    "product hunt launch copywriting tool (prefetched)",
+    "AI launch asset generator for indie hackers (prefetched)",
+    "how to write a Show HN post that works (prefetched)",
+    "launch checklist for side projects (prefetched)",
+    "hn_search: Show HN pitch generator",
+    "site:reddit.com \"Show HN\" title generator OR launch copy AI tool feedback",
+    "site:reddit.com r/SideProject \"Product Hunt\" launch AI generated copy criticism",
+    "Product Hunt launch copywriting generator reviews reception",
+    "indiehackers.com forum \"launch checklist\" thread",
+    "\"how to write a Show HN\" post tips guide indie hackers",
+    "AI generated Show HN post detected called out \"sounds like AI\""
+  ],
+  "similarProducts": [
+    {
+      "name": "Product Hunt Launch Copywriting Generator",
+      "url": "https://news.ycombinator.com/item?id=41577232",
+      "platform": "hn",
+      "claim": "Generates PH tagline/description copy",
+      "reception": "unknown",
+      "takeaway": "4 points, 1 throwaway comment ('Great to know!'). Single-purpose PH-only copy generators barely register on HN — no substantive discussion at all."
+    },
+    {
+      "name": "CoLaunchly – marketing co-pilot for devs who hate marketing",
+      "url": "https://news.ycombinator.com/item?id=43544891",
+      "platform": "hn",
+      "claim": "AI marketing co-pilot for developer side projects",
+      "reception": "negative",
+      "takeaway": "Almost identical positioning to LaunchJury ('for devs who hate marketing'). Got 1 point, 0 comments, and the product's own domain (colaunchly.io) now 301-redirects to an unrelated spam site — a direct cautionary tale that this exact pitch alone doesn't earn attention or survive."
+    },
+    {
+      "name": "AI elevator pitch / pitch deck generators (PitchGrub, founderpal, FastPitchDeck, GPT-3 pitch generator)",
+      "url": "https://news.ycombinator.com/item?id=8260359",
+      "platform": "hn",
+      "claim": "Generate founder pitches/decks from a prompt",
+      "reception": "negative",
+      "takeaway": "Consistently 1-4 points, 0-1 comments across a decade of attempts (2014-2025). Pure LLM-wrapper generators for founder-facing copy are structurally ignored by HN regardless of era or exact niche."
+    },
+    {
+      "name": "Social copy generators (LinkedIn/TikTok/Instagram Post Generators, Crafto)",
+      "url": "https://news.ycombinator.com/item?id=34957510",
+      "platform": "hn",
+      "claim": "Generate social media posts/carousels from a prompt",
+      "reception": "negative",
+      "takeaway": "2-4 points each, near-zero discussion. HN treats generic 'AI writes your social post' tools as spam-adjacent no matter which platform they target."
+    },
+    {
+      "name": "Show HN: Acquisition Blog Post Generator",
+      "url": "https://news.ycombinator.com/item?id=23968399",
+      "platform": "hn",
+      "claim": "Satirizes startup-acquisition announcement blog posts by generating parody copy",
+      "reception": "positive",
+      "takeaway": "24 points, real engagement — proves HN will engage with a 'generator' when it's a cultural/satirical artifact rather than a serious marketing tool. Suggests LaunchJury's copy should lean into HN's love of insider self-awareness, not polished marketing-speak."
+    },
+    {
+      "name": "Show HN: DepsGuard – harden NPM/pnpm/yarn/bun/uv configs",
+      "url": "https://news.ycombinator.com/item?id=48359478",
+      "platform": "hn",
+      "claim": "One-command CLI to harden JS package manager configs",
+      "reception": "positive",
+      "takeaway": "40 points, 7 warm comments, maker fixed a reported bug within the thread. Good proxy for how a narrowly-scoped CLI dev tool (LaunchJury's own category) should behave during and after launch."
+    },
+    {
+      "name": "Launch HN: Runway (YC W21) – easier iOS/Android releases",
+      "url": "https://news.ycombinator.com/item?id=27435377",
+      "platform": "hn",
+      "claim": "Release management tool for mobile teams",
+      "reception": "positive",
+      "takeaway": "93 points, 30 comments, sustained by the founder giving detailed, quantified, non-defensive answers to every skeptical question (including 'why would I pay for this'). Model for how LaunchJury's own founder should engage on its Show HN day."
+    }
+  ],
+  "praiseThemes": [
+    {
+      "theme": "Makers who respond fast and personally to every comment (including bug reports) on launch day get warm, sustained goodwill",
+      "evidence": [
+        {
+          "quote": "I love this! Although I've already gone through and made manual updates, I'll still give this a try.",
+          "url": "https://news.ycombinator.com/item?id=48359478",
+          "source": "hn"
+        },
+        {
+          "quote": "Thank you so much for writing this!",
+          "url": "https://news.ycombinator.com/item?id=48359478",
+          "source": "hn"
+        },
+        {
+          "quote": "Fixed it! My bad haha",
+          "url": "https://news.ycombinator.com/item?id=43729683",
+          "source": "hn"
+        }
+      ]
+    },
+    {
+      "theme": "Concrete, quantified, technical claims outperform vague value-prop language",
+      "evidence": [
+        {
+          "quote": "We started with some napkin math, graduated to a complicated spreadsheet, and then tried to distill that into this rough calculator",
+          "url": "https://news.ycombinator.com/item?id=27435377",
+          "source": "hn"
+        },
+        {
+          "quote": "The 'did it save someone from a supply chain attack? Also probably yes' line is great. The problem with security tooling is exactly this — you never see the attack you prevented.",
+          "url": "https://news.ycombinator.com/item?id=48359478",
+          "source": "hn"
+        }
+      ]
+    },
+    {
+      "theme": "Novelty/humor generators (as opposed to marketing-copy generators) can genuinely land on HN",
+      "evidence": [
+        {
+          "quote": "I love/hate the sarcasm that the only shutdown options are tomorrow or in 4 days.",
+          "url": "https://news.ycombinator.com/item?id=23968399",
+          "source": "hn"
+        }
+      ]
+    }
+  ],
+  "objections": [
+    {
+      "objection": "Generic AI copy/pitch/marketing-copy generators get almost zero engagement on HN regardless of target channel",
+      "frequency": "common",
+      "evidence": [
+        {
+          "quote": "Great to know!",
+          "url": "https://news.ycombinator.com/item?id=41577232",
+          "source": "hn",
+          "score": 4
+        },
+        {
+          "quote": "Show HN: I Built a high-content pitch generator with GPT-3",
+          "url": "https://news.ycombinator.com/item?id=33453369",
+          "source": "hn",
+          "score": 4
+        },
+        {
+          "quote": "Show HN: PitchGrub – an elevator pitch generator for startups",
+          "url": "https://news.ycombinator.com/item?id=8260359",
+          "source": "hn",
+          "score": 3
+        },
+        {
+          "quote": "Show HN: I built a free elevator pitch generator",
+          "url": "https://news.ycombinator.com/item?id=41847643",
+          "source": "hn",
+          "score": 2
+        },
+        {
+          "quote": "Show HN: LinkedIn Post Generator",
+          "url": "https://news.ycombinator.com/item?id=34957510",
+          "source": "hn",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "objection": "HN readers and mods are actively fatigued/suspicious of AI-generated Show HN posts and comments",
+      "frequency": "common",
+      "evidence": [
+        {
+          "quote": "In 2024, there were 17,661 Show HN posts. In the past year, there have been over 448,000 Show HN posts!",
+          "url": "https://news.ycombinator.com/item?id=47201629",
+          "source": "hn"
+        },
+        {
+          "quote": "most of these posts are AI generated",
+          "url": "https://news.ycombinator.com/item?id=47201629",
+          "source": "hn"
+        },
+        {
+          "quote": "seems to have gotten progressively worse over the last few months, with last few weeks reaching some sort of tipping point.",
+          "url": "https://news.ycombinator.com/item?id=47201629",
+          "source": "hn"
+        }
+      ]
+    },
+    {
+      "objection": "Self-promotion without prior community participation gets a post buried or killed",
+      "frequency": "common",
+      "evidence": [
+        {
+          "quote": "Posting nothing but links to your own blog is a classic rookie mistake. If you do that your posts are automatically [dead]. Post some links to somebody else's blog, write some comments, get your karma up to 100 or so.",
+          "url": "https://news.ycombinator.com/item?id=47061947",
+          "source": "hn"
+        },
+        {
+          "quote": "I often click on the submitter's profile and if I see very low karma, or karma only related to their own submissions, then it makes me think that they're only on HN to promote themselves.",
+          "url": "https://news.ycombinator.com/item?id=47061947",
+          "source": "hn"
+        }
+      ]
+    },
+    {
+      "objection": "Marketing/sales language and hype in a Show HN post is an instant turnoff for this audience",
+      "frequency": "common",
+      "evidence": [
+        {
+          "quote": "Imagine a friend that you're meeting up with for drinks, who has no idea what you've been working on, but is smart, curious, and asks good questions.",
+          "url": "https://www.indiehackers.com/post/how-to-write-posts-that-do-well-on-hacker-news-607f4f48e9",
+          "source": "web"
+        }
+      ]
+    },
+    {
+      "objection": "'Marketing co-pilot for devs' framing specifically has already been tried and ignored",
+      "frequency": "occasional",
+      "evidence": [
+        {
+          "quote": "Show HN: CoLaunchly – A marketing co-pilot for devs who hate marketing",
+          "url": "https://news.ycombinator.com/item?id=43544891",
+          "source": "hn",
+          "score": 1
+        }
+      ]
+    }
+  ],
+  "featureRequests": [
+    {
+      "request": "A trustworthy, canonical launch checklist that doesn't need to be re-derived from scratch every time",
+      "evidence": [
+        {
+          "quote": "I'm Creating My First Indie Product - What Should My Pre-Launch Checklist Include?",
+          "url": "https://www.indiehackers.com/forum/im-creating-my-first-indie-product-what-should-my-pre-launch-checklist-include-7de57fb690",
+          "source": "web"
+        },
+        {
+          "quote": "What's on your launch checklist?",
+          "url": "https://www.indiehackers.com/post/whats-on-your-launch-checklist-6f985dcc3b",
+          "source": "web"
+        }
+      ]
+    },
+    {
+      "request": "Self-hosted / no-external-dependency option for indie tools, even free ones",
+      "evidence": [
+        {
+          "quote": "Given you are already offering the product for free it would be cool to have a self hosted option.",
+          "url": "https://news.ycombinator.com/item?id=46242071",
+          "source": "hn"
+        }
+      ]
+    },
+    {
+      "request": "Fast, visible responsiveness to bug reports on launch day (broken links, config detection, etc.)",
+      "evidence": [
+        {
+          "quote": "I still haven't managed to make it find any project-level configs.",
+          "url": "https://news.ycombinator.com/item?id=48359478",
+          "source": "hn"
+        },
+        {
+          "quote": "Should be fixed now, thanks again!",
+          "url": "https://news.ycombinator.com/item?id=48359478",
+          "source": "hn"
+        }
+      ]
+    }
+  ],
+  "winningTitles": [
+    {
+      "title": "Show HN: I made a Doom-like game fit inside a QR code",
+      "platform": "hn",
+      "points": 531,
+      "url": "https://news.ycombinator.com/item?id=43729683",
+      "whyItWorked": "Extremely concrete, visually verifiable technical feat stated in one sentence — no adjectives, no marketing framing, just 'what' and an implicit 'how is that even possible.'"
+    },
+    {
+      "title": "Launch HN: Runway (YC W21) – Easier iOS and Android app releases for teams",
+      "platform": "hn",
+      "points": 93,
+      "url": "https://news.ycombinator.com/item?id=27435377",
+      "whyItWorked": "YC-format signals legitimacy; title names the exact user (teams) and exact pain (release friction) instead of a vague tagline; founder backed it with a real cost calculator in comments."
+    },
+    {
+      "title": "Show HN: DepsGuard – One command to harden NPM/pnpm/yarn/bun/uv configs",
+      "platform": "hn",
+      "points": 40,
+      "url": "https://news.ycombinator.com/item?id=48359478",
+      "whyItWorked": "Verb-first, single command, lists exact tool names it supports — reads like documentation, not a pitch, which is exactly what HN's own style guides recommend."
+    },
+    {
+      "title": "Show HN: Acquisition Blog Post Generator",
+      "platform": "hn",
+      "points": 24,
+      "url": "https://news.ycombinator.com/item?id=23968399",
+      "whyItWorked": "Works because it's explicitly a parody of a genre HN already mocks (startup acquisition PR-speak) — the joke is the value, not the utility, so it doesn't trigger the usual 'generic AI generator' dismissal."
+    }
+  ],
+  "communities": [
+    {
+      "name": "Hacker News (Show HN)",
+      "platform": "hn",
+      "url": "https://news.ycombinator.com/showhn.html",
+      "engagementNote": "Rewards concrete, technical, non-hyperbolic titles and makers who reply to every comment (see Runway, DepsGuard, Doom-in-QR-code threads). Punishes pure self-promotion by accounts with low/no non-self karma (PaulHoule, vunderba comments). Currently in an active backlash against AI-generated Show HN posts and comments — a tool whose output 'sounds like AI' is a real liability here, not a neutral trait.",
+      "rulesNote": "No asking for upvotes, no vote brigading, don't submit a landing page with no working product, respond to comments, don't resubmit the same thing repeatedly."
+    },
+    {
+      "name": "Indie Hackers forum",
+      "platform": "indiehackers",
+      "url": "https://www.indiehackers.com/forum",
+      "engagementNote": "Highly receptive to 'how I launched / here's my checklist' educational posts; the same question ('what's on your launch checklist?') has been re-asked in multiple threads over several years, showing sustained, unmet demand rather than a solved problem. Best entry is a build-in-public / retrospective post, not a hard pitch.",
+      "rulesNote": "Self-promo tolerated if framed as a story or lesson-learned rather than an ad."
+    },
+    {
+      "name": "Product Hunt",
+      "platform": "producthunt",
+      "url": "https://www.producthunt.com",
+      "engagementNote": "Community favors taglines that read like 'a builder describing a tool to other builders' over descriptive, generic AI-style copy; maker comment engagement on launch day is expected and scrutinized.",
+      "rulesNote": "n/a in this dataset — no direct PH thread comments retrieved this pass."
+    },
+    {
+      "name": "r/SideProject, r/IndieHackers (subreddit)",
+      "platform": "reddit",
+      "engagementNote": "Reddit's API returned HTTP 403 for every query this pass (see queriesUsed/warnings), so we have no verified quotes from these subreddits. Treat any claims about Reddit reception as unverified until a manual/browser-based pass is done.",
+      "rulesNote": "Unknown this pass — verify subreddit self-promo rules manually before treating as a launch channel."
+    },
+    {
+      "name": "X / Twitter indie-hacker circles",
+      "platform": "x",
+      "engagementNote": "Only surfaced a single @IndieHackers checklist promo tweet; no reception/engagement data found. Open gap for a follow-up research pass, don't assume X behaves like HN.",
+      "rulesNote": "Unknown this pass."
+    }
+  ],
+  "gaps": [
+    "No competitor in this dataset does a real research step (scraping/citing actual comparable HN/PH/Reddit launches with URLs) before generating copy — every rival found is a blind prompt-to-copy generator. This directly validates LaunchJury's 'grounded in real quotes' differentiator as genuinely unclaimed territory.",
+    "No competitor uses a multi-persona jury / weighted scoring / pass-fail revision loop — all found tools are single-shot generators with no self-critique or reproducible scoring mechanism.",
+    "No competitor ships a full multi-channel kit (Show HN + PH + Reddit + X + LinkedIn + video script) in one run; every product found is single-channel (just a PH tagline, or just a LinkedIn post, or just a pitch deck).",
+    "Despite years of repeated 'what should be on my launch checklist' threads on Indie Hackers, nobody has apparently shipped a tool that closes that loop with an actual scored artifact — the need is recurring and still framed as a forum question, not a product people cite.",
+    "Nobody in this dataset addresses the elephant in the room: HN's rising, vocal fatigue with AI-generated Show HN posts/comments. No competing tool markets itself on 'this won't read as AI-written' — which is both a gap LaunchJury could own and a real risk it must actively defuse in its own launch post, since it is itself an AI generator."
+  ],
+  "summary": "This exact category — AI generators that produce launch/marketing copy for founders — has a near-perfect track record of dying quietly on Hacker News: pitch generators, PH tagline tools, and social-copy generators all land at 1-4 points with 0-1 comments, and the closest direct analog, \"CoLaunchly – a marketing co-pilot for devs who hate marketing,\" got 1 point, 0 comments, and its domain has since expired into a spam redirect. What does work on HN in this space is either (a) a narrowly-scoped, technically concrete CLI dev tool whose maker responds fast and personally to every comment (DepsGuard, Runway), or (b) a generator that's honestly a joke/cultural artifact rather than a serious marketing tool (Acquisition Blog Post Generator). Compounding the risk, HN is in an active, vocal backlash against AI-generated Show HN posts and comments right now, so LaunchJury's own launch post must not read as AI-written even though the product is an AI generator — this tension is unaddressed by any competitor found. On the upside, nobody in this data set actually grounds their copy generation in real comparable-launch research, scores drafts with a reproducible multi-persona jury, or ships a full multi-channel kit in one run — these are genuinely open claims LaunchJury can make, provided the launch post itself demonstrates (not just claims) peer-to-peer, non-marketing, technically concrete writing."
+}

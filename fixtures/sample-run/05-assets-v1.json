@@ -1,0 +1,207 @@
+{
+  "showHn": {
+    "title": "Show HN: LaunchJury - reads your repo, scores your draft vs. real Show HNs",
+    "body": "LaunchJury is a CLI. You point it at a repo:\n\nnpx launchjury ./my-project --mock\n\nIt reads the README, the manifests and enough source to say what the project actually is. Then it hits the HN Algolia API and Reddit for comparable launches - same category, same shape - and pulls their titles, point counts, comment counts and URLs. Then it drafts a Show HN post, a Product Hunt listing, an X thread, a LinkedIn post and per-subreddit Reddit posts. Then seven juror personas (HN veteran, PH coach, Reddit mod, growth marketer, dev-tools copywriter, demo director, skeptical target user) score every asset 1-10, predict the top comment it would get, and list must-fix edits. A foreman - plain TypeScript, unit tested, no model in the loop - aggregates the weighted scores and gates: weighted average >= 7.5, nothing below 6. Fail, and a reviser rewrites and the jury runs again, up to 2 rounds. Output is out/<project>/report.html, self-contained, no external requests.\n\nWhy I built it: in 2024 there were about 17,661 Show HN posts. In the past year there have been over 448,000. The post is now the bottleneck, not the build, and I had no idea how to write one.\n\nThe obvious objection, up front: yes, this is an AI generator for Show HN posts, and yes, HN is drowning in AI-written posts. I did not post what it generated. I ran LaunchJury on itself, it scored my own draft a 5, and the jury told me why: the mechanic was buried under the output, there was no proof, and the skeptical-user juror predicted the top comment would be \"another LLM wrapper that writes marketing copy.\" I rewrote this post by hand from those notes. The generated draft and this post are both in examples/launchjury/ so you can read the diff, along with the report.html it wrote about itself, failing scores included.\n\nI also ran the jury blind against 18 historical Show HNs whose real point counts I already knew (Doom-in-a-QR-code 531, Runway 93, DepsGuard 40, CoLaunchly 1, and 14 others). It separated the top few from the bottom few and was close to useless in the middle. n=18, one category, so treat it as a smoke test, not evidence. Script and raw output are in scripts/backtest.ts if you want to argue with the methodology - I would like someone to.\n\nHow it is built: TypeScript on the Claude Agent SDK. Eight stages - resolve, ingest, research, validate, distribute, draft, jury, report. Each LLM stage is one query() call with a zod-validated JSON schema output, and every stage writes its artifact to disk, so --from jury resumes without re-paying for research. One decision worth mentioning: research is deliberately split in half. The HN Algolia and Reddit fetches are deterministic code, so the numbers are real and identical between runs; only the interpretation is a model, and it has to cite a URL for anything it claims. The scoring gate is the same idea - the jurors are models, but the aggregation and the pass/fail threshold are pure functions with unit tests, so a run is reproducible even when the prose is not. Agents run read-only and sandboxed; they never read your CLAUDE.md.\n\nNot done yet: GitHub URL ingestion does a shallow clone to a temp dir with no auth, so private repos are local-path only. The Reddit prefetch is unauthenticated JSON and gets rate-limited if you run it repeatedly. English only. The juror weights are hand-set numbers I guessed and have not tuned against anything. The video scripts are the weakest output by a distance - they read like a template and I would cut them if nobody uses them.\n\nCost: --mock is free and replays a recorded run end to end, which is the honest way to evaluate it. A real run is about $3 and about 4 minutes against an ANTHROPIC_API_KEY, and --budget hard-caps the spend. MIT.",
+    "authorFirstComment": "Author here. The part I would most like torn apart is the foreman, because it is the only piece that is supposed to be trustworthy.\n\nThe jurors are models and their prose is noise. So the aggregation is deliberately not: src/jury/foreman.ts is about 120 lines of TypeScript with no model call, it takes seven score vectors and fixed weights, and it returns pass/fail. Same inputs, same verdict, every time. The weights are the weak point - I picked them by hand (HN veteran and skeptical-target-user weigh heaviest for a dev tool, PH coach weighs least) and I have no principled defence of those numbers beyond \"they matched my intuitions on 18 old threads.\" If someone has a better way to calibrate persona weights against known outcomes, that is the thing I actually want to talk about.\n\nSecond, pre-empting the top comment, which the tool itself predicted: \"another LLM wrapper that writes marketing copy.\" That is fair, and the record backs it up - the closest analog I found in the research, CoLaunchly, got 1 point and 0 comments and its domain now redirects to spam. The research artifact LaunchJury produced for its own launch lists seven of those corpses with scores and URLs; it is in examples/launchjury/research.json. The only reason I think this one is different is the direction of the arrow: it starts by pulling what actually happened to comparable posts, and its most useful output for me was not the copy, it was a 5/10 and a list of reasons. If you run it and it just hands you confident slop, tell me and paste the report - that is the failure mode I most want to see.\n\nI will be here all day and will reply to everything, including bug reports."
+  },
+  "productHunt": {
+    "tagline": "Know how your launch post will land before you post it",
+    "description": "LaunchJury is an MIT-licensed CLI for the developer who just finished a side project and has never written a Show HN or a Product Hunt launch.\n\nPoint it at a repo:\nnpx launchjury ./my-project --mock\n\nWhat happens:\n\n1. Reads your README, manifests and source, so the copy describes the product you actually built.\n2. Pulls real comparable launches from Hacker News and Reddit - titles, point counts, comment counts, URLs.\n3. Scores your positioning against eight principles: clarity, audience, differentiation, why-now, proof, objections, credibility, ask.\n4. Drafts the full kit: Show HN post and first comment, PH tagline/description/maker comment, X thread, LinkedIn post, per-subreddit Reddit posts, demo and launch video scripts.\n5. Seven weighted AI jurors score every asset, predict the top comment it would get, and list must-fix edits.\n6. A deterministic, unit-tested foreman aggregates the scores and gates pass/fail. Fail, and a reviser rewrites and re-runs the jury.\n\nOut the back: one self-contained report.html with copy buttons, plus markdown assets and per-stage JSON you can resume from.\n\nHonest bits: --mock is free and offline. A real run is about $3 and 4 minutes with an ANTHROPIC_API_KEY. It scored its own first draft a 5 out of 10, and that report is published in the repo.",
+    "firstComment": "I spent five weeks on a side project and then sat looking at an empty Show HN title field for two days.\n\nThe advice I found was all vibes - \"be concrete,\" \"don't sound like marketing\" - with nothing to check my draft against. Meanwhile the data was sitting right there: every comparable launch of the last decade, with its exact score and its exact comments, one API call away. So I wrote the thing that goes and gets those threads first, and only then writes anything.\n\nThe part that changed my mind about it was when I ran it on itself. It gave my draft a 5, predicted the top comment would be \"another LLM wrapper that writes marketing copy,\" and listed the reasons. I rewrote the post by hand from that feedback. The generated draft and the rewrite are both in the repo so you can read the diff.\n\nI genuinely do not know whether the useful product here is the generated copy or the score. Which one would you actually use?",
+    "topics": [
+      "Developer Tools",
+      "Artificial Intelligence",
+      "Marketing"
+    ]
+  },
+  "xThread": {
+    "tweets": [
+      "Show HN posts went from ~17,661 in 2024 to over 448,000 in the past year.\n\nThe post is the bottleneck now, not the build.\n\nSo I wrote a CLI that reads my repo, pulls the comparable Show HN threads with their real scores, and grades my draft against them before I submit.",
+      "Every launch-copy generator I found writes from a prompt with no idea how comparable posts actually did.\n\nLaunchJury starts the other way round: deterministic HN Algolia + Reddit fetch first. Real titles, real point counts, real URLs. The model only gets to interpret them.",
+      "Then seven juror personas score the draft 1-10 - HN veteran, Reddit mod, PH coach, skeptical target user, and three more.\n\nEach one also predicts the top comment your post would get. That prediction was more useful to me than any of the copy it wrote.",
+      "The aggregation is not a model.\n\nsrc/jury/foreman.ts is ~120 lines of plain TypeScript with unit tests. Fixed weights, pass gate at 7.5 average with nothing below 6. Same inputs, same verdict, every time. The prose is stochastic; the grade isn't.",
+      "I ran it on itself. It scored my draft a 5 and predicted the top comment: \"another LLM wrapper that writes marketing copy.\"\n\nFair. I rewrote the post by hand from its notes. The 5/10 report and the diff between its draft and mine are both published in the repo.",
+      "Backtest, including the misses: jury run blind over 18 historical Show HNs with known scores (Doom-in-a-QR-code 531 ... CoLaunchly 1).\n\nIt separated the top from the bottom and was useless in the middle. n=18. Smoke test, not evidence. Script is in the repo.",
+      "Free offline replay:\nnpx launchjury ./my-project --mock\n\nReal run: ~$3, ~4 min, needs ANTHROPIC_API_KEY, --budget caps it. MIT, read-only agents, self-contained HTML report with no external requests.\n\nRepo + the report it wrote about itself:"
+    ],
+    "tagSuggestions": [
+      "indie hacker and build-in-public accounts",
+      "dev tool founders who have run a Show HN",
+      "Claude Agent SDK / Anthropic developer community",
+      "technical writing and devrel accounts",
+      "Hacker News watchers and launch-analysis accounts"
+    ]
+  },
+  "reddit": [
+    {
+      "subreddit": "SideProject",
+      "title": "I made an AI score my launch post. It gave me a 5/10 and it was right. Here's what it flagged.",
+      "body": "I built the tool, so treat this as an author post - but the useful part here is the feedback, not the tool.\n\nI finished a side project and froze on the Show HN title for two days. So I wrote a CLI that pulls comparable launches off the HN Algolia API and Reddit (real titles, real point counts, real URLs), drafts a launch post, and then has seven scoring personas rate it and predict the top comment it would get.\n\nThen I pointed it at itself. It gave my draft a 5/10. The four things it flagged apply to basically every launch post I see in this sub:\n\n1. **You led with the output, not the mechanic.** \"Generates launch assets\" tells me nothing. \"Reads your repo and pulls the comparable threads that actually got traction\" is a thing I can verify. Lead with the weird part.\n2. **No proof, only claims.** Every adjective in my draft was unearned. The fix was publishing the report where my own tool scored me a 5, including the failing rows.\n3. **The objection wasn't named.** Mine was obvious - an AI generator launching into a community that's sick of AI generators. The predicted top comment was \"another LLM wrapper that writes marketing copy.\" Naming it yourself in paragraph two is free; letting someone else name it in the comments is not.\n4. **No why-now.** \"~17,661 Show HN posts in 2024, over 448,000 in the past year\" did more work than three paragraphs of value prop.\n\nThe one that stung: I looked up the closest existing product to mine. Same pitch, 1 point, 0 comments, and its domain now redirects to a spam site. Reading your own category's graveyard before you write is the single highest-leverage hour I've spent on a launch.\n\nFree offline replay if you want to run it on your own repo: `npx launchjury ./my-project --mock`. Real run is about $3 and 4 minutes on an API key. MIT.\n\nWhat's the harshest accurate thing anyone has said about your launch post?",
+      "flair": "Sharing my project"
+    },
+    {
+      "subreddit": "IndieHackers",
+      "title": "I backtested launch-post scoring against 18 old Show HNs. It worked at the extremes and failed in the middle.",
+      "body": "Disclosure: this came out of a tool I built and open-sourced, but I want to talk about the backtest, because the result is more interesting than the tool.\n\nPremise: if an AI panel can predict how a launch post will do, it should be able to score posts whose outcomes are already known. So I took 18 historical Show HN threads with their real point counts, stripped the scores, and ran a seven-persona jury blind over each title and body.\n\nWhat happened:\n\n- It correctly put the extremes in the right order. \"I made a Doom-like game fit inside a QR code\" (531 points) scored high. \"A marketing co-pilot for devs who hate marketing\" (1 point, 0 comments, domain now redirecting to spam) scored low.\n- It was close to useless in the middle. Anything in the 20-100 point band it graded more or less at random. Which makes sense - the difference between 30 points and 90 points is usually timing, front-page luck and who showed up, not the prose.\n- n=18, one category, scores known to me while building the rubric. That is a smoke test, not evidence, and I would not defend it harder than that.\n\nThe practical takeaway for anyone launching: copy quality appears to set a floor, not a ceiling. You can write yourself out of a launch, but you probably can't write yourself into the front page. Which argues for spending your effort on (a) not sounding like marketing and (b) being present in the comments for eight hours, rather than on the tenth revision of your tagline.\n\nThe second takeaway is cheaper: before writing anything, go read every comparable launch in your category including the dead ones. The 1-point corpses taught me more than the 500-point hit.\n\nTool is MIT, offline mock mode is free (`npx launchjury ./my-project --mock`), real run ~$3. Happy to share the raw backtest output if anyone wants to pick holes in the methodology - I'd rather find out it's wrong now.",
+      "flair": "Technical"
+    }
+  ],
+  "linkedin": {
+    "post": "I spent five weeks building a side project and two days staring at an empty title field.\n\nThe build had tests, types, CI. The launch post had nothing. No way to tell whether the sentence I'd written was good or just familiar.\n\nMeanwhile the evidence was sitting in public. Every comparable launch of the last ten years, with its exact score, its exact comments, and whether anyone cared. One API call away.\n\nSo I wrote a CLI that goes and gets those threads before it writes a word.\n\nIt reads the repo. It pulls the comparable launches with their real numbers. It drafts the posts. Then seven scoring personas rate every draft, predict the top comment it would get, and list what has to change. A plain TypeScript function - no model, unit tested - aggregates the scores and decides pass or fail.\n\nThen I pointed it at itself.\n\nIt gave my draft a 5 out of 10.\n\nIt predicted the top comment would be \"another LLM wrapper that writes marketing copy.\"\n\nIt was right. I rewrote the post by hand from its notes, and published the failing report alongside the repo.\n\nThat's the part I keep thinking about. The copy it generated was fine and forgettable. The score and the predicted comment were the thing worth $3.\n\nMost of us edit our own writing by reading it again. That mostly measures how familiar it has become.\n\nMIT licensed. Free offline mode. Link in the first comment."
+  },
+  "demoVideo": {
+    "title": "LaunchJury — it gave my own launch post a 5/10 (demo)",
+    "totalSec": 100,
+    "scenes": [
+      {
+        "n": 1,
+        "durationSec": 4,
+        "onScreenAction": "report.html is already open in the browser, scrolled to the validation scorecard. A red '3/10 — why-now' and '5/10 — one-liner' row sit dead center. No cursor movement, just a 1s beat then a slow highlight pulse on the 5/10.",
+        "voiceOver": "That's LaunchJury scoring my own launch post. Five out of ten.",
+        "onScreenText": "one-liner: 5/10 · why-now: 3/10",
+        "shot": "Browser only, chrome hidden (Cmd+Shift+F fullscreen). 1920x1080 capture, page zoomed to 150% so the scorecard rows fill the frame. Cursor hidden."
+      },
+      {
+        "n": 2,
+        "durationSec": 10,
+        "onScreenAction": "Cut to a clean terminal. Type the command live at normal speed and hit enter: npx launchjury ./launchjury --mock. First two stage lines (resolve, ingest) print.",
+        "voiceOver": "One command, against a local path or a GitHub URL. It reads the README, the manifests, and the source before it writes a single word.",
+        "onScreenText": "npx launchjury ./my-project --mock",
+        "shot": "Terminal only, full screen, 20pt JetBrains Mono, dark background. Capture at 1920x1080, no zoom. Cursor visible as terminal block caret only."
+      },
+      {
+        "n": 3,
+        "durationSec": 14,
+        "onScreenAction": "Stage log scrolls: research → HN Algolia prefetch, Reddit prefetch, then analyst agent. Cut at 6s to out/launchjury/research.json in an editor, scrolled to an array of real Show HN threads with titles, points and URLs (Doom-in-QR 531, Runway 93, DepsGuard 40, CoLaunchly 1).",
+        "voiceOver": "Stage three pulls the real comparable threads. Hacker News and Reddit, fetched deterministically, then an analyst agent extracts quotes, objections and competitors with URLs. Actual Show HNs, actual point counts.",
+        "onScreenText": "research.json — 7 comparable threads, with scores",
+        "shot": "Terminal full screen 20pt for first 6s, then editor at 150% zoom on the JSON array, word wrap on, minimap and sidebar hidden. Slow 2-line-per-second scroll."
+      },
+      {
+        "n": 4,
+        "durationSec": 14,
+        "onScreenAction": "Back to terminal, validate stage prints the eight-principle table. Pause on the row 'why-now .......... 3/10'. Then the fix text expands underneath.",
+        "voiceOver": "Then eight positioning principles get scored. Mine failed why-now with a three. The fix it handed back: Show HN went from seventeen thousand posts a year to four hundred forty-eight thousand.",
+        "onScreenText": "17,661 → 448,000 Show HN posts",
+        "shot": "Terminal full screen, 20pt. Zoom to 130% on the eight-row table for the last 5s using a post-edit scale, not a live resize. Cursor hidden."
+      },
+      {
+        "n": 5,
+        "durationSec": 16,
+        "onScreenAction": "Draft stage flashes by, then the jury stage: seven persona lines resolve one by one (hn-veteran, ph-coach, reddit-mod, x-growth, devtools-copy, demo-director, skeptical-user), each with a score. Foreman aggregate table prints last with a red FAIL.",
+        "voiceOver": "Drafting is one pass. The jury is the interesting part: seven weighted personas score every asset in parallel, then a plain TypeScript foreman — unit tested, no model in the loop — aggregates and gates it. Seven-point-five weighted average, nothing below six.",
+        "onScreenText": "foreman: weighted 7.1 · min 5.0 · FAIL",
+        "shot": "Terminal full screen, 20pt. Hold the frame still; let the lines land on their own. No zoom until the foreman table, then crop to the bottom 40% of the screen in post."
+      },
+      {
+        "n": 6,
+        "durationSec": 12,
+        "onScreenAction": "Switch to report.html, scroll to the 'Predicted top comment' card from the HN veteran juror. Highlight the quoted line with a text selection drag.",
+        "voiceOver": "Every juror also predicts the top comment you'd actually get. The HN veteran predicted mine: this is an AI generator posting about AI generators. It was right, so I answered it in the first comment.",
+        "onScreenText": "Predicted top comment — HN veteran",
+        "shot": "Browser fullscreen, page zoom 150%, card centered. Real cursor visible for the selection drag, cursor size bumped to large in macOS accessibility."
+      },
+      {
+        "n": 7,
+        "durationSec": 12,
+        "onScreenAction": "Split view: round-1 draft on the left, round-2 revision on the right, changed lines highlighted. Terminal strip at the bottom shows the re-jury passing at 8.2.",
+        "voiceOver": "Fail, and the reviser rewrites and re-juries, two rounds by default. Every stage writes its artifact to disk, so you can resume any run with dash dash from.",
+        "onScreenText": "--from jury",
+        "shot": "Editor diff view, 18pt, side-by-side, 130% zoom. Terminal pinned as a 200px strip along the bottom. Cursor hidden."
+      },
+      {
+        "n": 8,
+        "durationSec": 10,
+        "onScreenAction": "Scroll report.html top to bottom fast enough to read the section headers: Show HN, Product Hunt, X thread, LinkedIn, r/SideProject, r/webdev, demo script, launch script. Click one copy button; the toast says Copied.",
+        "voiceOver": "Out comes one self-contained HTML report with copy buttons and no external requests, plus markdown for every channel and both video scripts.",
+        "onScreenText": "out/launchjury/report.html",
+        "shot": "Browser fullscreen, page zoom 100% for the scroll so headers read as a list, cursor visible for the copy-button click. Smooth scroll, about 900px per second."
+      },
+      {
+        "n": 9,
+        "durationSec": 8,
+        "onScreenAction": "Cut back to a blank terminal. Type the install line, leave it on screen unexecuted. Repo URL fades in below.",
+        "voiceOver": "Mock mode is free and offline. A real run is about three dollars and four minutes. MIT, on GitHub.",
+        "onScreenText": "npx launchjury ./my-project --mock\nreal run: ~$3, ~4 min, ANTHROPIC_API_KEY",
+        "shot": "Terminal full screen, 24pt for the final card so it reads on a phone. Hold the last frame 2 full seconds before cutting."
+      }
+    ],
+    "shotList": [
+      "report.html open at the validation scorecard with 5/10 and 3/10 visible (hero shot, recorded last so scores match)",
+      "Clean terminal: typing and running npx launchjury ./launchjury --mock through the ingest stage",
+      "Terminal: research stage log (HN Algolia prefetch, Reddit prefetch, analyst agent)",
+      "Editor: out/launchjury/research.json scrolled through the comparable-threads array with points and URLs",
+      "Terminal: validate stage eight-principle table with why-now 3/10 and the fix text",
+      "Terminal: jury stage, seven persona scores resolving, then the foreman aggregate FAIL table",
+      "Browser: report.html 'Predicted top comment' card with text selection",
+      "Editor: side-by-side round-1 vs round-2 diff plus terminal strip showing the passing re-jury",
+      "Browser: full top-to-bottom scroll of report.html section headers plus one copy-button click with toast",
+      "Terminal: final CTA card with the npx command and cost/runtime line"
+    ],
+    "recordingNotes": "Record 1920x1080 at 60fps, export 1080p. Terminal: JetBrains Mono 20pt (24pt for the closing card), dark theme, single-line prompt reading just a $ — rename the shell prompt so no username, hostname or absolute home path appears. Editor: same font at 18pt, sidebar/minimap/breadcrumbs/git gutter off, word wrap on. Browser: fullscreen, no tabs, no bookmarks bar, no extensions; page zoom 150% for card shots, 100% for the scroll. Cursor hidden on all pure-terminal shots (defaults write -g NSCursorHidden or just don't move the mouse and crop it out); for the two click shots set macOS cursor size to large and add a click highlight. Hide: Dock, menu bar clock, notifications (Do Not Disturb on), any .env or API key in scrollback, CLAUDE.md, and any real path under /Users — run the demo from a repo cloned to /tmp/launchjury. Run with --mock so the timings are fast and repeatable; if a real stage takes longer than its scene, speed-ramp the log scroll 4x rather than cutting mid-line. Record the hero shot (scene 1) last so the numbers on screen match the run in scenes 2-8. No music under the voice-over; a single soft keystroke bed is fine. Voice-over recorded separately, flat delivery, 135 wpm."
+  },
+  "launchVideo": {
+    "hook": "Show HN went from 17,000 posts a year to 448,000. Your post is the bottleneck now, not your build.",
+    "totalSec": 78,
+    "scenes": [
+      {
+        "n": 1,
+        "durationSec": 7,
+        "onScreenAction": "Black frame, the two numbers type on one after the other in terminal type. 17,661 holds for a beat, then 448,000 slams in underneath at 3x the size.",
+        "voiceOver": "Show HN went from seventeen thousand posts a year to four hundred forty-eight thousand. Your post is the bottleneck now, not your build.",
+        "onScreenText": "2024: 17,661 Show HN posts\nnow: 448,000",
+        "shot": "Full-frame text card built in the terminal itself (echo with a sleep) so the typography matches the rest of the video. 1920x1080, 48pt mono. No cursor."
+      },
+      {
+        "n": 2,
+        "durationSec": 9,
+        "onScreenAction": "Cut straight to the terminal. Command is typed and run: npx launchjury ./my-project. Stage lines resolve → ingest → research start streaming immediately.",
+        "voiceOver": "So before you post, run the post through this. One command, pointed at your repo.",
+        "onScreenText": "npx launchjury ./my-project",
+        "shot": "Terminal full screen, 20pt mono, dark. No zoom, no cursor. Speed-ramp the stage log 3x so real output fills the 9 seconds."
+      },
+      {
+        "n": 3,
+        "durationSec": 11,
+        "onScreenAction": "research.json on screen: the list of comparable Show HN threads it pulled, each with title, points, and a real news.ycombinator.com URL. Highlight Doom-in-QR 531, Runway 93, DepsGuard 40, CoLaunchly 1.",
+        "voiceOver": "It doesn't write from a prompt. It pulls the comparable Show HN threads first — real titles, real point counts, real URLs — including the ones that got one point and died.",
+        "onScreenText": "Doom-in-QR 531 · Runway 93 · DepsGuard 40 · CoLaunchly 1",
+        "shot": "Editor at 150% zoom on the JSON array, word wrap on, chrome hidden. Slow scroll, then hold on the four highlighted rows for 3 seconds."
+      },
+      {
+        "n": 4,
+        "durationSec": 9,
+        "onScreenAction": "Plain text card over a dimmed screenshot of a GitHub repo page with a README.",
+        "voiceOver": "This is for one person: you have a public repo with a README, you're planning to post it Tuesday morning, and you've never written a Show HN.",
+        "onScreenText": "public repo · README · posting Tuesday · never written a Show HN",
+        "shot": "Static composite. GitHub page screenshot at 40% opacity behind 40pt mono text, left-aligned. No motion, no cursor."
+      },
+      {
+        "n": 5,
+        "durationSec": 13,
+        "onScreenAction": "Jury stage in the terminal: seven persona lines land with scores, then the foreman table prints weighted 7.1, min 5.0, FAIL. Cut to the reviser rewriting and the re-jury passing at 8.2.",
+        "voiceOver": "Seven weighted reviewer personas score your draft, predict the top comment you'd get, and list the must-fix edits. A plain TypeScript foreman — unit tested, no model in the loop — decides pass or fail. Fail, and it rewrites and re-scores.",
+        "onScreenText": "7 jurors · deterministic foreman · auto-revise",
+        "shot": "Terminal full screen, 20pt. Hold still while the seven lines resolve, then crop to the bottom 40% for the foreman table in post."
+      },
+      {
+        "n": 6,
+        "durationSec": 16,
+        "onScreenAction": "Two-part credibility beat. First: report.html scrolled to the row where LaunchJury scored its own one-liner 5/10 and why-now 3/10. Then cut to the backtest chart — predicted jury score on one axis, actual HN points on the other, 18 historical Show HNs plotted, three misses circled in red.",
+        "voiceOver": "Here's the one thing no generator in this category has shown you. This is LaunchJury's report on its own launch post — it failed itself twice. And this is the jury backtested against eighteen real Show HNs, predicted score against actual points, misses circled.",
+        "onScreenText": "it scored itself 5/10 · backtest: 18 real Show HNs, misses included",
+        "shot": "Browser fullscreen, 150% zoom on the failing rows for 6 seconds, then hard cut to the backtest chart full frame for 10. Cursor hidden. Let the red circles sit on screen a full 3 seconds."
+      },
+      {
+        "n": 7,
+        "durationSec": 13,
+        "onScreenAction": "Back to a bare terminal. The mock command types out and stays. Cost and runtime line fades in below it, then the repo URL.",
+        "voiceOver": "Mock mode runs free and offline, no key needed. A real run is about three dollars and four minutes with an Anthropic key. MIT licensed. Go score your draft before Tuesday.",
+        "onScreenText": "npx launchjury ./my-project --mock\nreal run: ~$3 · ~4 min · ANTHROPIC_API_KEY\nMIT · github.com/…/launchjury",
+        "shot": "Terminal full screen, 24pt so it reads on a phone in feed. Hold the final frame 3 seconds. No cursor, no motion."
+      }
+    ],
+    "cta": "npx launchjury ./my-project --mock — free and offline. Go score your draft before Tuesday."
+  },
+  "version": 1
+}
