@@ -2,6 +2,7 @@ import pc from "picocolors";
 import { STAGES } from "./stages.ts";
 import { artifactName, defaultLoad, defaultSave, type Stage } from "./stage.ts";
 import type { RunContext } from "./context.ts";
+import type { StageHandle } from "../ui/log.ts";
 
 function stageIndex(name: string | undefined, fallback: number): number {
   if (!name) return fallback;
@@ -34,7 +35,11 @@ export async function runPipeline(ctx: RunContext): Promise<void> {
         group.push({ stage: STAGES[i], index: i });
       }
     }
-    await Promise.all(group.map(({ stage: s, index }) => runOne(ctx, s, index)));
+    if (group.length === 1) {
+      await runOne(ctx, group[0].stage, group[0].index);
+    } else {
+      await runGroup(ctx, group);
+    }
     i++;
   }
 }
@@ -46,6 +51,40 @@ async function runOne(ctx: RunContext, stage: Stage<any>, index: number) {
     defaultSave(stage, ctx, index, data);
     const cost = ctx.meta.costs[stage.name];
     handle.done(cost ? `$${cost.usd.toFixed(2)}` : stage.schema ? artifactName(index, stage.key) + ".json" : undefined);
+  } catch (err) {
+    handle.fail(err instanceof Error ? err.message : String(err));
+    throw err;
+  }
+}
+
+/** Parallel stages share one spinner so their progress lines don't fight over the terminal. */
+async function runGroup(ctx: RunContext, group: Array<{ stage: Stage<any>; index: number }>) {
+  const label = group.map((g) => g.stage.label).join(" ‖ ");
+  const handle = ctx.ui.stage(group[0].index, label);
+  const latest = new Map<string, string>();
+  const compose = () => [...latest.entries()].map(([k, v]) => `${k}: ${v}`).join("  ·  ");
+  const sub = (stage: Stage<any>): StageHandle => ({
+    message: (t) => { latest.set(stage.name, t); handle.message(compose()); },
+    done: () => {},
+    fail: () => {},
+    onEvent: (e) => {
+      if (e.kind === "tool") latest.set(stage.name, `${e.name} ${e.summary}`);
+      else if (e.kind === "status") latest.set(stage.name, e.text);
+      else return;
+      handle.message(compose());
+    },
+  });
+  try {
+    await Promise.all(
+      group.map(async ({ stage, index }) => {
+        const data = await stage.run(ctx, sub(stage));
+        defaultSave(stage, ctx, index, data);
+        latest.set(stage.name, "done");
+        handle.message(compose());
+      }),
+    );
+    const usd = group.reduce((a, g) => a + (ctx.meta.costs[g.stage.name]?.usd ?? 0), 0);
+    handle.done(`$${usd.toFixed(2)}`);
   } catch (err) {
     handle.fail(err instanceof Error ? err.message : String(err));
     throw err;
